@@ -1,34 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Список завдань</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Список завдань</title>
+  <link rel="stylesheet" href="style.css" type="text/css" media="screen">
 </head>
 <body>
-    <div class="wrapper">
-        <h3>Нова задача</h3>
-            <p>
-                <label for="new-task">Додати завдання</label>
-                <input type="text" name="" id="new-task">
-                <button >Додати</button>
-            </p>
-        <hr>
-        <h3>Активні задачі</h3>
-        <ul class="active-task">
-            <li>
-                <label for="active-task">Активна задача</label>
-                <button class="btn delete-btn">Видалити</button>
-            </li>
-            <hr>
-        </ul>
-        <ul class="completed-task">
+  <container>
+    <p>
+      <label for="new-task">Додати завдання</label><input id="new-task" type="text"><button>Додати</button>
+    </p>
+    
+    <h3>Виконати</h3>
+    <ul id="incomplete-tasks">
+      <li><input type="checkbox"><label>Оплатити рахунки</label><input type="text"><button class="edit">Редагувати</button><button class="delete">Видалити</button></li>
+      <li class="editMode"><input type="checkbox"><label>Скупитись</label><input type="text" value="Скупитись"><button class="edit">Редагувати</button><button class="delete">Видалити</button></li>
+      
+    </ul>
+    
+    <h3>Виконано</h3>
+    <ul id="completed-tasks">
+      <li><input type="checkbox" checked><label>Сходити до лікаря</label><input type="text"><button class="edit">Редагувати</button><button class="delete">Видалити</button></li>
+    </ul>
+  </container>
 
-
-        </ul>
-    </div>
-    <script src="script.js"></script>
+  <script type="text/javascript" src="script.js"></script>
 </body>
 </html>

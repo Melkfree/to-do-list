@@ -1,44 +1,106 @@
-var newTask = document.getElementsByClassName("add-task");
-var addButton = document.getElementsByTagName("button")[0];
-var activeTask = document.getElementsByClassName("active-task");
+let taskInput=document.getElementById("new-task");
+let addButton=document.getElementsByTagName("button")[0];
+let incompleteTaskHolder=document.getElementById("incomplete-tasks");
+let completedTasksHolder=document.getElementById("completed-tasks");
 
-var createNewTaskElement = function(taskString){
-    var listItem = document.createElement("li");
-    var label = document.createElement("label");
-    var deleteButton = document.createElement("button");
-    var addHr = document.createElement("hr");
+let createNewTaskElement=function(taskString){
 
-    deleteButton.innerText = "Видалити";
-    deleteButton.className = "delete";
+	let listItem=document.createElement("li");
+	let checkBox=document.createElement("input");
+	let label=document.createElement("label");
+	let editInput=document.createElement("input");
+	let editButton=document.createElement("button");
 
-    label.innerText = taskString;
+	let deleteButton=document.createElement("button");
 
-    listItem.appendChild(label);
-    listItem.appendChild(deleteButton);
+	label.innerText=taskString;
 
-    return listItem;
+	checkBox.type="checkbox";
+	editInput.type="text";
+
+	editButton.innerText="Редагувати";
+	editButton.className="edit";
+	deleteButton.innerText="Видалити";
+	deleteButton.className="delete";
+
+	listItem.appendChild(checkBox);
+	listItem.appendChild(label);
+	listItem.appendChild(editInput);
+	listItem.appendChild(editButton);
+	listItem.appendChild(deleteButton);
+	return listItem;
 }
 
-var addTask = function (){
-    var listItem = createNewTaskElement(newTask.value);
-    activeTask.appendChild(listItem);
-    newTask.value = "";
+
+let addTask=function(){
+	let listItem=createNewTaskElement(taskInput.value);
+
+	incompleteTaskHolder.appendChild(listItem);
+	bindTaskEvents(listItem, taskCompleted);
+
+	taskInput.value="";
 }
 
-var deleteTask = function(){
-    var listItem = this.parentNode;
-    var ul = listItem.parentNode;
+let editTask=function(){
+console.log("Edit Task...");
+console.log("Change 'edit' to 'save'");
 
-    ul.removeChild(listItem);
+
+let listItem=this.parentNode;
+
+let editInput=listItem.querySelector('input[type=text]');
+let label=listItem.querySelector("label");
+let containsClass=listItem.classList.contains("editMode");
+
+	if(containsClass){
+		label.innerText=editInput.value;
+	}else{
+		editInput.value=label.innerText;
+	}
+
+	listItem.classList.toggle("editMode");
 }
 
-addButton.addEventListener("click", addTask);
 
-var bindTaskEvents = function(taskListItem, ) {
-  var deleteButton = taskListItem.querySelector("button.delete");
-    deleteButton.onclick = deleteTask;
+let deleteTask=function(){
+	let listItem=this.parentNode;
+	let ul=listItem.parentNode;
+
+	ul.removeChild(listItem);
 }
 
-for (var i = 0; i < activeTask.children.length; i ++) {	
-    bindTaskEvents(activeTask.children[i],);
-  }
+let taskCompleted=function(){
+
+	let listItem=this.parentNode;
+	completedTasksHolder.appendChild(listItem);
+	bindTaskEvents(listItem, taskIncomplete);
+}
+
+
+let taskIncomplete=function(){
+	let listItem=this.parentNode;
+	incompleteTaskHolder.appendChild(listItem);
+	bindTaskEvents(listItem,taskCompleted);
+}
+
+addButton.onclick=addTask;
+addButton.addEventListener("click",addTask);
+
+let bindTaskEvents=function(taskListItem,checkBoxEventHandler){
+
+	let checkBox=taskListItem.querySelector("input[type=checkbox]");
+	let editButton=taskListItem.querySelector("button.edit");
+	let deleteButton=taskListItem.querySelector("button.delete");
+
+	editButton.onclick=editTask;
+	deleteButton.onclick=deleteTask;
+	checkBox.onchange=checkBoxEventHandler;
+}
+
+	for (let i=0; i<incompleteTaskHolder.children.length;i++){
+		bindTaskEvents(incompleteTaskHolder.children[i],taskCompleted);
+	}
+
+	for (let i=0; i<completedTasksHolder.children.length;i++){
+		bindTaskEvents(completedTasksHolder.children[i],taskIncomplete);
+	}
