@@ -32,25 +32,25 @@ app.get("/", (req, res) => {
 // POST METHOD
 app.post('/',async (req, res) => {
     const todoTask = new TodoTask({
-    content: req.body.content
+        content: req.body.content
     });
     try {
-    await todoTask.save();
-    res.redirect("/");
+        await todoTask.save();
+        res.redirect("/");
     } catch (err) {
-    res.redirect("/");
+        res.redirect("/");
     }
-    });
+});
 
 
 // UPDATE
 app
     .route("/edit/:id")
     .get((req, res) => {
-    const id = req.params.id;
-    TodoTask.find({}, (err, tasks) => {
-        res.render("todoEdit.ejs", { todoTasks: tasks, idTask: id });
-    });
+        const id = req.params.id;
+        TodoTask.find({}, (err, tasks) => {
+            res.render("todoEdit.ejs", { todoTasks: tasks, idTask: id });
+        });
     })
     .post((req, res) => {
         const id = req.params.id;
