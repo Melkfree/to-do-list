@@ -3,6 +3,7 @@ const app = express();
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const TodoTask = require("./models/TodoTask");
+const routes = require("./routes");
 
 dotenv.config();
 
@@ -13,21 +14,16 @@ app.use(express.urlencoded({ extended: true }));
 
 //connection to db
 mongoose.set("useFindAndModify", false);
-mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true }, () => {
+mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
+    console.log(err)
     console.log("Connected to db!");
-    app.listen(3000, () => console.log("Server Up and running"));
+    app.listen(4000, () => console.log("Server Up and running"));
 });
 
 // view engine configuration
 app.set("view engine", "ejs");
 
-// GET
-app.get("/", (req, res) => {
-    TodoTask.find({}, (err, tasks) => {
-        res.render("todo.ejs", { todoTasks: tasks });
-    });
-});
-
+routes(app);
 
 // POST METHOD
 app.post('/',async (req, res) => {
