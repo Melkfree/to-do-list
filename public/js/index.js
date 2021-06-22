@@ -7,13 +7,14 @@ fetch('/todos')
         const listHtml = items.map(todo => `
                 <li class="todo-list-item">
                     <div class="todo-list-item-name">${todo.content}</div>
-                    <a href="/edit/${todo._id}" class="edit">
+                    <a href="/edit/${todo._id}" class="edit" id="edit-task">
                         <span class="fas fa-edit"></span>
                     </a>
-                    <a href="/remove/${todo._id}" class="remove">
+                    <a href="/remove/${todo._id}" class="remove" id="delete-task">
                         <span class="fas fa-times"></span>
                     </a>
                 </li>
             `);
-        tasksListEllement.innerHTML =listHtml.join('');
+        tasksListEllement.innerHTML = listHtml.join('');
     })
+
