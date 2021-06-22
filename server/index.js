@@ -18,7 +18,7 @@ app.use("/static", express.static("./public"));
 //connection to db
 mongoose.set("useFindAndModify", false);
 mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
-    console.log("Connected to db!", err);
+    console.log("Connected to db!");
     app.listen(4000, () => console.log("Server Up and running"));
 });
 
