@@ -13,16 +13,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(bodyParser.json());
 
-app.use("/static", express.static("public"));
+app.use("/static", express.static("./public"));
 
 //connection to db
 mongoose.set("useFindAndModify", false);
 mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
-    console.log("Connected to db!");
+    console.log("Connected to db!", err);
     app.listen(4000, () => console.log("Server Up and running"));
 });
 
 // view engine configuration
+app.set('views', './server/views')
 app.set("view engine", "ejs");
 
 routes(app);
