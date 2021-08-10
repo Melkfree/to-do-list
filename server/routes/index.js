@@ -2,7 +2,7 @@ const { indexAction } = require('../controllers/IndexController');
 const {
     indexAction: todosAllAction,
     addAction:  addTodoAction,
-    deleteAction: delAction
+    delAction: deleteTodoAction,
 } = require('../controllers/TodosController');
 
 const routes = (app) => {
@@ -10,7 +10,7 @@ const routes = (app) => {
         .get('/', indexAction)
         .get('/todos', todosAllAction)
         .post('/todos', addTodoAction)
-        .get('/remove/:id', deleteAction)
+        .delete('/todos/remove/:id', deleteTodoAction)
 }
 
 module.exports = routes;

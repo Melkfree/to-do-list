@@ -2,6 +2,7 @@ const TodoTask = require("../models/TodoTask");
 
 const indexAction = (req, res) => {
     TodoTask.find({}, (err, tasks) => {
+        if (err) return res.send(500, err);
         res.json({ items: tasks });
     });
 }
@@ -27,8 +28,8 @@ const addAction = async (req, res) => {
 const delAction = async (req, res)=> {
     const id = req.params.id;
     TodoTask.findByIdAndRemove(id, err => {
-    if (err) return res.send(500, err);
-    res.send("DELETED");
+        if (err) return res.send(500, err);
+        res.json({ id });
     });
 }
 

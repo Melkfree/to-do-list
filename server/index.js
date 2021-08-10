@@ -18,6 +18,7 @@ app.use("/static", express.static("./public"));
 //connection to db
 mongoose.set("useFindAndModify", false);
 mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
+    if (err) throw new Error(err)
     console.log("Connected to db!");
     app.listen(4000, () => console.log("Server Up and running"));
 });
@@ -45,15 +46,3 @@ app
             res.redirect("/");
         });
 });
-
-
-
-//DELETE
-// app.route("/remove/:id").get((req, res) => {
-//     const id = req.params.id;
-//     TodoTask.findByIdAndRemove(id, err => {
-//         if (err) return res.send(500, err);
-//         res.redirect("/");
-//     });
-// });
-
