@@ -23,7 +23,17 @@ const addAction = async (req, res) => {
     }
 };
 
+
+const delAction = async (req, res)=> {
+    const id = req.params.id;
+    TodoTask.findByIdAndRemove(id, err => {
+    if (err) return res.send(500, err);
+    res.send("DELETED");
+    });
+}
+
 module.exports = {
     indexAction,
     addAction,
+    delAction
 }
