@@ -10,9 +10,6 @@ fetch('/todos')
                     <a href="/edit/${todo._id}" class="edit">
                         <span class="fas fa-edit"></span>
                     </a>
-                    <a href="/remove/${todo._id}" class="remove">
-                        <span class="fas fa-times"></span>
-                    </a>
                     <button form="removeTodo_${todo._id}" class="remove-button">[x]</button>
                     <form hidden id="removeTodo_${todo._id}" class="remove-todo">
                         <input hidden name="id" value="${todo._id}" />
@@ -43,8 +40,6 @@ addTodoForm.addEventListener('submit', (e) => {
             <li class="todo-list-item">
             <div class="todo-list-item-name">${content}</div>
             <a href="/edit/${_id}" class="edit"> <span class="fas fa-edit"></span>
-            </a>
-            <a href="/remove/${_id}" class="remove"> <span class="fas fa-times"></span>
             </a>
             <button form="removeTodo_${_id}" class="remove-button">[x]</button>
             <form hidden id="removeTodo_${_id}" class="remove-todo">
@@ -79,7 +74,10 @@ function removeTodoListener(_id) {
             method: 'DELETE',
         })
         .then(res => res.json())
-        .then(data => console.log(data))
+        .then(function(){
+            tasksListEllement.removeChild(document.getElementById(`removeTodo_${_id}`).parentNode)
+        })
         .catch(err => console.log(err));
     });
+    
 }
