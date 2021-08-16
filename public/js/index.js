@@ -37,7 +37,7 @@ addTodoForm.addEventListener('submit', (e) => {
         const li = document.createElement('li');
         li.classList.add('todo-list-item')
         li.innerHTML = `
-            <li class="todo-list-item">
+            
             <div class="todo-list-item-name">${content}</div>
             <a href="/edit/${_id}" class="edit"> <span class="fas fa-edit"></span>
             </a>
