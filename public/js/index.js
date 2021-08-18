@@ -37,7 +37,6 @@ addTodoForm.addEventListener('submit', (e) => {
         const li = document.createElement('li');
         li.classList.add('todo-list-item')
         li.innerHTML = `
-            
             <div class="todo-list-item-name">${content}</div>
             <a href="/edit/${_id}" class="edit"> <span class="fas fa-edit"></span>
             </a>
@@ -47,7 +46,8 @@ addTodoForm.addEventListener('submit', (e) => {
             </form>
         `;
         tasksListEllement.append(li);
-        removeTodoListener(_id)
+        removeTodoListener(_id);
+        document.getElementById("new-task").value="";
     })
     .catch(e => {
         console.log(e)
