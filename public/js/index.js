@@ -7,9 +7,11 @@ fetch('/todos')
         const listHtml = items.map(todo => `
                 <li class="todo-list-item">
                     <div class="todo-list-item-name">${todo.content}</div>
-                    <a href="/edit/${todo._id}" class="edit">
-                        <span class="fas fa-edit"></span>
-                    </a>
+                    
+                    <button form="updateTodo_${todo._id}" class="edit-button"><span class="fas fa-edit"></button>
+                    <form hidden id="updateTodo_${todo._id}" class="edit-todo">
+                        <input hidden name="id" value="${todo._id}" />
+                    </form>
                     <button form="removeTodo_${todo._id}" class="remove-button">[x]</button>
                     <form hidden id="removeTodo_${todo._id}" class="remove-todo">
                         <input hidden name="id" value="${todo._id}" />
@@ -17,7 +19,8 @@ fetch('/todos')
                 </li>
             `);
         tasksListEllement.innerHTML = listHtml.join('');
-        items.forEach(({ _id }) => removeTodoListener(_id))
+        items.forEach(({ _id }) => removeTodoListener(_id));
+        items.forEach(({ _id }) => editTodoListeren(_id));
     });
 
 const addTodoForm = document.getElementById('addTodo');
@@ -38,8 +41,10 @@ addTodoForm.addEventListener('submit', (e) => {
         li.classList.add('todo-list-item')
         li.innerHTML = `
             <div class="todo-list-item-name">${content}</div>
-            <a href="/edit/${_id}" class="edit"> <span class="fas fa-edit"></span>
-            </a>
+            <button form="updateTodo_${todo._id}" class="edit-button"><span class="fas fa-edit"></button>
+            <form hidden id="updateTodo_${todo._id}" class="edit-todo">
+                <input hidden name="id" value="${todo._id}" />
+            </form>
             <button form="removeTodo_${_id}" class="remove-button">[x]</button>
             <form hidden id="removeTodo_${_id}" class="remove-todo">
                 <input hidden name="id" value="${_id}" />
@@ -66,6 +71,18 @@ function getFormData(form) {
     return JSON.stringify(obj);
 }
 
+function editTodoListener(_id){
+    document.getElementById(`editTodo_${_id}`).addEventListener('submit', (e) => {
+        e.preventDefault();
+        fetch(`/todos/edit/${_id}`, {
+            method: 'PUT',
+        })
+        .then(res => res.json())
+        .then(console.log(res))
+        })
+        .catch(err => console.log(err));
+    })
+}
 
 function removeTodoListener(_id) {
     document.getElementById(`removeTodo_${_id}`).addEventListener('submit', (e) => {

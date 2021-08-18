@@ -24,6 +24,21 @@ const addAction = async (req, res) => {
     }
 };
 
+const updateAction = async (req, res) => {
+    const todo = await TodoTask.findById(req.params.id);
+    for(let key in req.body){
+        if(todo[key] != req.body[key]){
+            todo[key] = req.body[key]
+        }
+    }
+
+    try {
+        await todo.save();
+        res.send(todo)
+    } catch (err) {
+        res.send(400, err)
+    }
+}
 
 const delAction = async (req, res)=> {
     const id = req.params.id;
@@ -36,5 +51,6 @@ const delAction = async (req, res)=> {
 module.exports = {
     indexAction,
     addAction,
+    updateAction,
     delAction
 }
