@@ -19,8 +19,9 @@ fetch('/todos')
                 </li>
             `);
         tasksListEllement.innerHTML = listHtml.join('');
+        items.forEach(({ _id }) => editTodoListener(_id));
         items.forEach(({ _id }) => removeTodoListener(_id));
-        items.forEach(({ _id }) => editTodoListeren(_id));
+        
     });
 
 const addTodoForm = document.getElementById('addTodo');
@@ -36,14 +37,15 @@ addTodoForm.addEventListener('submit', (e) => {
         body: getFormData(addTodoForm),
     })
     .then((res) => res.json())
+    .then(res => (console.log(res)))
     .then(({ todo: { content, _id } }) => {
         const li = document.createElement('li');
         li.classList.add('todo-list-item')
         li.innerHTML = `
             <div class="todo-list-item-name">${content}</div>
-            <button form="updateTodo_${todo._id}" class="edit-button"><span class="fas fa-edit"></button>
-            <form hidden id="updateTodo_${todo._id}" class="edit-todo">
-                <input hidden name="id" value="${todo._id}" />
+            <button form="updateTodo_${_id}" class="edit-button"><span class="fas fa-edit"></button>
+            <form hidden id="updateTodo_${_id}" class="edit-todo">
+                <input hidden name="id" value="${_id}" />
             </form>
             <button form="removeTodo_${_id}" class="remove-button">[x]</button>
             <form hidden id="removeTodo_${_id}" class="remove-todo">
@@ -51,7 +53,9 @@ addTodoForm.addEventListener('submit', (e) => {
             </form>
         `;
         tasksListEllement.append(li);
+        editTodoListener(_id);
         removeTodoListener(_id);
+        
         document.getElementById("new-task").value="";
     })
     .catch(e => {
@@ -71,17 +75,36 @@ function getFormData(form) {
     return JSON.stringify(obj);
 }
 
-function editTodoListener(_id){
-    document.getElementById(`editTodo_${_id}`).addEventListener('submit', (e) => {
+function editTodoListener(_id) {
+    document.getElementById(`updateTodo_${_id}`).addEventListener('submit', (e) => {
         e.preventDefault();
+        console.log('EDIT');
+
         fetch(`/todos/edit/${_id}`, {
-            method: 'PUT',
+            method: 'GET'
         })
-        .then(res => res.json())
-        .then(console.log(res))
+        .then((res) => res.json())
+        .then(res => (console.log(res)))
+        .then(
+            // function(){
+            //     if (`${details._id}` == idTask){
+            //         alert(idTask);
+            //     }
+            // }
+
+
+            // function(){
+            // const editInput = document.createElement('input');
+            // editInput.type="text";
+            // editInput.value = `${content}`;
+            // document.getElementById(`updateTodo_${_id}`).appendChild(editInput);
+            // }
+        )
+        .catch(e => {
+            console.log(e);
         })
-        .catch(err => console.log(err));
-    })
+    });
+    
 }
 
 function removeTodoListener(_id) {
@@ -91,6 +114,7 @@ function removeTodoListener(_id) {
             method: 'DELETE',
         })
         .then(res => res.json())
+        .then(res => (console.log(res)))
         .then(function(){
             tasksListEllement.removeChild(document.getElementById(`removeTodo_${_id}`).parentNode)
         })
