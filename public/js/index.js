@@ -107,6 +107,7 @@ function editTodoListener(_id) {
             document.getElementById(`updateTodo_${_id}`).appendChild(editInput);
             document.getElementById(`updateTodo_${_id}`).appendChild(submitInputButton);
             document.getElementById(`updateTodo_${_id}`).appendChild(submitInputForm);
+            submitUpdateListener(_id);
             }
         )
         .catch(e => {
@@ -115,6 +116,26 @@ function editTodoListener(_id) {
     });
     
 }
+
+function submitUpdateListener(_id) {
+    document.getElementById(`updateTodoSubmit_${_id}`).addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        console.log('UPDATE!!!!!')
+        // fetch(`/todos/remove/${_id}`, {
+        //     method: 'DELETE',
+        // })
+        // .then(res => res.json())
+        // .then(res => (console.log(res)))
+        // .then(function(){
+        //     tasksListEllement.removeChild(document.getElementById(`removeTodo_${_id}`).parentNode)
+        // })
+        // .catch(err => console.log(err));
+    });
+    
+}
+
+
 
 function removeTodoListener(_id) {
     document.getElementById(`removeTodo_${_id}`).addEventListener('submit', (e) => {
