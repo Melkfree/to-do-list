@@ -90,13 +90,23 @@ function editTodoListener(_id) {
                 console.log(item);
             const editInput = document.createElement('input');
             const submitInputButton = document.createElement('button');
+            const submitInputForm = document.createElement('form');
+
             submitInputButton.innerText = 'Submit';
             submitInputButton.className ='update-submit';
-            submitInputButton.setAttribute('id', `updateSubmit_${_id}`);
+            submitInputButton.setAttribute('form', `updateTodoSubmit_${_id}`);
+
+            submitInputForm.setAttribute('id', `updateTodoSubmit_${_id}`);
+            submitInputForm.setAttribute('hidden', '');
+            submitInputForm.innerHTML = `<input hidden name="id" value="${_id}" />`;
+
             editInput.type="text";
             editInput.value = `${item.content}`;
+
+
             document.getElementById(`updateTodo_${_id}`).appendChild(editInput);
             document.getElementById(`updateTodo_${_id}`).appendChild(submitInputButton);
+            document.getElementById(`updateTodo_${_id}`).appendChild(submitInputForm);
             }
         )
         .catch(e => {
