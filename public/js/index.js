@@ -86,10 +86,11 @@ function editTodoListener(_id) {
         .then((res) => res.json())
         // .then(res => (console.log(res)))
         .then(
-            function(){
+            function(item){
+                console.log(item);
             const editInput = document.createElement('input');
             editInput.type="text";
-            editInput.value = `YEYEYEYEYE`;
+            editInput.value = `${item.content}`;
             document.getElementById(`updateTodo_${_id}`).appendChild(editInput);
             }
         )
