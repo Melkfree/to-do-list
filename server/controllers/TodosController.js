@@ -22,14 +22,15 @@ const addAction = async (req, res) => {
     } catch (err) {
         res.status = 500;
     }
-};
+}
 
 const editAction = async (req, res) => {
     const id = req.params.id;
-    const content = req.params.content;
-    TodoTask.find({}, (err, tasks) => {
+    
+    TodoTask.findById(id, (err, task) => {
     if (err) return res.send(500, err);
-    res.json({ contentTask: content, idTask: id });
+        // console.log(tasks)
+    res.json({ item: task});
 });
 }
 

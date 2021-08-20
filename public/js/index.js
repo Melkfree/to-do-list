@@ -37,7 +37,7 @@ addTodoForm.addEventListener('submit', (e) => {
         body: getFormData(addTodoForm),
     })
     .then((res) => res.json())
-    .then(res => (console.log(res)))
+    // .then(res => (console.log(res)))
     .then(({ todo: { content, _id } }) => {
         const li = document.createElement('li');
         li.classList.add('todo-list-item')
@@ -84,21 +84,14 @@ function editTodoListener(_id) {
             method: 'GET'
         })
         .then((res) => res.json())
-        .then(res => (console.log(res)))
+        // .then(res => (console.log(res)))
         .then(
-            // function(){
-            //     if (`${details._id}` == idTask){
-            //         alert(idTask);
-            //     }
-            // }
-
-
-            // function(){
-            // const editInput = document.createElement('input');
-            // editInput.type="text";
-            // editInput.value = `${content}`;
-            // document.getElementById(`updateTodo_${_id}`).appendChild(editInput);
-            // }
+            function(){
+            const editInput = document.createElement('input');
+            editInput.type="text";
+            editInput.value = `YEYEYEYEYE`;
+            document.getElementById(`updateTodo_${_id}`).appendChild(editInput);
+            }
         )
         .catch(e => {
             console.log(e);
