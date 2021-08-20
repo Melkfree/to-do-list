@@ -89,9 +89,14 @@ function editTodoListener(_id) {
             function(item){
                 console.log(item);
             const editInput = document.createElement('input');
+            const submitInputButton = document.createElement('button');
+            submitInputButton.innerText = 'Submit';
+            submitInputButton.className ='update-submit';
+            submitInputButton.setAttribute('id', `updateSubmit_${_id}`);
             editInput.type="text";
             editInput.value = `${item.content}`;
             document.getElementById(`updateTodo_${_id}`).appendChild(editInput);
+            document.getElementById(`updateTodo_${_id}`).appendChild(submitInputButton);
             }
         )
         .catch(e => {
