@@ -46,7 +46,7 @@ addTodoForm.addEventListener('submit', (e) => {
         li.innerHTML = `
             <div class="todo-list-item-name">${content}</div>
             <button form="updateTodo_${_id}" class="edit-button"><span class="fas fa-edit"></button>
-            <form hidden id="updateTodo_${_id}" class="edit-todo">
+            <form hidden id="updateTodo_${_id}" class="edit-todo" >
                 <input hidden name="id" value="${_id}" />
             </form>
             <button form="removeTodo_${_id}" class="remove-button">[x]</button>
@@ -100,6 +100,7 @@ function editTodoListener(_id) {
 
             submitInputForm.setAttribute('id', `updateTodoSubmit_${_id}`);
             submitInputForm.setAttribute('hidden', '');
+            // submitInputForm.setAttribute('display', 'none');
             submitInputForm.setAttribute('method', 'POST');
             submitInputForm.innerHTML = `<input hidden name="id" value="${_id}" />`;
 

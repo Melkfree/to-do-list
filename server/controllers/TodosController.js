@@ -4,6 +4,7 @@ const indexAction = (req, res) => {
     TodoTask.find({}, (err, tasks) => {
         if (err) return res.send(500, err);
         res.json({ items: tasks });
+        console.log(tasks);
     });
 }
 
@@ -28,7 +29,6 @@ const editAction = async (req, res) => {
     const id = req.params.id;
     TodoTask.findById(id, (err, task) => {
     if (err) return res.send(500, err);
-        // console.log(tasks)
     res.json({ id, content: task.content});
 });
 }
