@@ -125,14 +125,14 @@ function editTodoListener(_id) {
 function submitUpdateListener(_id) {
     document.getElementById(`updateTodoSubmit_${_id}`).addEventListener('submit', (e) => {
         e.preventDefault();
-        // const data = new FormData(document.getElementById(`updateTodoSubmit_${_id}`));
+        const data = new FormData(document.getElementById(`updateTodoSubmit_${_id}`));
         fetch(`/todos/edit/${_id}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({content: 'HIIIII'}),
-            // body: getFormData(document.getElementById(`updateTodoSubmit_${_id}`)),
+            // body: JSON.stringify({content: 'HIIIII'}),
+            body: JSON.stringify({content : document.getElementById(`submitTodo_${_id}`).value}),
         })
         .then(res => res.json())
         // .then(res => {console.log(res)})
