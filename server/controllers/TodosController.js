@@ -37,9 +37,10 @@ const editAction = async (req, res) => {
 
 const confirmEditAction = async (req, res) => {
     const id = req.params.id;
-    TodoTask.findByIdAndUpdate(id, { content: req.body.content }, err => {
+    const content = req.body.content;
+    TodoTask.findByIdAndUpdate(id, {content}, err => {
     if (err) return res.send(500, err);
-    res.redirect("/");
+    res.json({id, content});
 });
 
 }

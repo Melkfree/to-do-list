@@ -1,3 +1,5 @@
+// const { json } = require("body-parser");
+
 const tasksListEllement = document.getElementById('tasksList');
 
 fetch('/todos')
@@ -98,15 +100,18 @@ function editTodoListener(_id) {
 
             submitInputForm.setAttribute('id', `updateTodoSubmit_${_id}`);
             submitInputForm.setAttribute('hidden', '');
+            submitInputForm.setAttribute('method', 'POST');
             submitInputForm.innerHTML = `<input hidden name="id" value="${_id}" />`;
 
             editInput.type="text";
+            editInput.setAttribute('id', `submitTodo_${_id}`);
             editInput.value = `${item.content}`;
 
 
+            document.getElementById(`updateTodo_${_id}`).appendChild(submitInputForm);
             document.getElementById(`updateTodo_${_id}`).appendChild(editInput);
             document.getElementById(`updateTodo_${_id}`).appendChild(submitInputButton);
-            document.getElementById(`updateTodo_${_id}`).appendChild(submitInputForm);
+            
             submitUpdateListener(_id);
             }
         )
@@ -120,17 +125,33 @@ function editTodoListener(_id) {
 function submitUpdateListener(_id) {
     document.getElementById(`updateTodoSubmit_${_id}`).addEventListener('submit', (e) => {
         e.preventDefault();
+        // const data = new FormData(document.getElementById(`updateTodoSubmit_${_id}`));
+        fetch(`/todos/edit/${_id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({content: 'HIIIII'}),
+            // body: getFormData(document.getElementById(`updateTodoSubmit_${_id}`)),
+        })
+        .then(res => res.json())
+        // .then(res => {console.log(res)})
+        .then(function(item) {
+            console.log(`This ${item.content} and ${item.id}`);
+            const divUpdate = document.createElement('div');
+            divUpdate.innerText = `${item.content}`;
 
-        console.log('UPDATE!!!!!')
-        // fetch(`/todos/remove/${_id}`, {
-        //     method: 'DELETE',
-        // })
-        // .then(res => res.json())
-        // .then(res => (console.log(res)))
-        // .then(function(){
-        //     tasksListEllement.removeChild(document.getElementById(`removeTodo_${_id}`).parentNode)
-        // })
-        // .catch(err => console.log(err));
+            
+            
+            document.getElementById(`updateTodo_${_id}`).parentNode.replaceChild(divUpdate ,document.getElementById(`updateTodo_${_id}`).parentNode.getElementsByTagName('div')[0])
+            while (document.getElementById(`updateTodo_${_id}`).firstChild) {
+                document.getElementById(`updateTodo_${_id}`).removeChild(document.getElementById(`updateTodo_${_id}`).firstChild);
+            }
+        })
+        .catch(e => {
+            console.log(e)
+        })
+
     });
     
 }
