@@ -1,3 +1,3 @@
 # to-do-list
-Just to-do list
-Native DOM todo
+TODO list native JS + MongoDB + Express + NODE.js
+
